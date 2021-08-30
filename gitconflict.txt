@@ -1,8 +1,4 @@
 Here's a line
-<<<<<<< HEAD
-Hello world from A!
-=======
-Hello world from B!
->>>>>>> b3fd941fc8533c1c50e196f1d8dd82930a4a9d07
+Hello world from everyone!
 Here's another line
 to your git repository.
