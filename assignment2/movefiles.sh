@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 function movefls () {
     if [ -d "$1" ] && [ -d "$2" ]; then # -d: FILE exists and is a directory
         ls "./$1"
