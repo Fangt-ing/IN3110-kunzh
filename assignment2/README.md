@@ -29,8 +29,5 @@ To do "B" the user needs to run the following command
 
 ```bash
 commmand2 arguments 
-```
+
 ## Task 2.y
-.
-.
-.
