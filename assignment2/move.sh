@@ -1,5 +1,5 @@
 #!/bin/bash
-function movefls () {
+function move() {
     if [ -d "$1" ] && [ -d "$2" ]; then # -d: FILE exists and is a directory
         ls "./$1"
         mv "$1"/* "$2"
@@ -13,4 +13,4 @@ function movefls () {
     fi
 }
 
-movefls "$1" "$2"
+move "$1" "$2"
