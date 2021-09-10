@@ -1,0 +1,12 @@
+cmd: which bash
+outputs: /usr/bin/bash
+
+this code help to exit a source cmd
+cmd: exec bash
+
+$sourcefile/*.$file_type (file_type needs to be indicated mannually)
+
+break/ continue
+
+create dir with time appended.
+mkdir folder-$(date +"%Y-%h-%d_%H:%M")
