@@ -10,3 +10,17 @@ break/ continue
 
 create dir with time appended.
 mkdir folder-$(date +"%Y-%h-%d_%H:%M")
+
+TASK2
+$(date +%s)
+
+date +"%a %b %d %T %Z %Y"
+
+This converts all to seconds.
+
+tail -1 file.txt
+to check the last line of a file.
+
+track start "Task 1"
+
+echo "i am a cat" | cut -d' ' -f3-
