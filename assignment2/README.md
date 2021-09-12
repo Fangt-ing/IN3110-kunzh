@@ -24,7 +24,7 @@ To move all files from source_dir to destination_dir the user needs to run the f
 move.sh source_dir destination_dir2
 ```
 
-To move certain types of files from dir1 to dir2 the user needs to run the following command
+To move certain types of files from source_dir1 to destination_dir2 the user needs to run the following command
 
 ```bash
 move.sh source_dir destination_dir2 file_extension
