@@ -18,16 +18,16 @@ Here you can name limitations.
 
 ### Usage
 
-To move all files from dir1 to dir2 the user needs to run the following command
+To move all files from source_dir to destination_dir the user needs to run the following command
 
 ```bash
-move.sh dir1 dir2
+move.sh source_dir destination_dir2
 ```
 
 To move certain types of files from dir1 to dir2 the user needs to run the following command
 
 ```bash
-move.sh dir1 dir2 file_extension
+move.sh source_dir destination_dir2 file_extension
 ```
 
 ## Task 2.y
