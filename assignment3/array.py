@@ -1,14 +1,18 @@
 
+from pydoc import Doc
+from matplotlib import docstring
+
+
 class Array:
 
     def __init__(self, shape, *values):
         """
-        
+
         Initialize an array of 1-dimensionality. Elements can only be of type:
         - int
         - float
         - bool
-        
+
         Make sure that you check that your array actually is an array, which means it is homogeneous (one data type).
 
         Args:
@@ -19,12 +23,20 @@ class Array:
             ValueError: If the values are not all of the same type.
             ValueError: If the number of values does not fit with the shape.
         """
-        
+
         # Check if the values are of valid type
-        
-        
+
         # Optional: If not all values are of same type, all are converted to floats.
-        
+
+        pass
+
+    def __shape__(self, rows, columns):
+        """Defines the array demention by variables rows, columns.
+
+        Returns:
+            tuple: in integers and refers to the demnetionality of the array.
+
+        """
         pass
 
     def __str__(self):
@@ -49,10 +61,9 @@ class Array:
             Array: the sum as a new array.
 
         """
-        
+
         # check that the method supports the given arguments (check for data type and shape of array)
-        
-        
+
         pass
 
     def __radd__(self, other):
@@ -164,9 +175,8 @@ class Array:
             ValueError: if the shape of self and other are not equal.
 
         """
-        
+
         pass
-    
 
     def min_element(self):
         """Returns the smallest value of the array.
@@ -177,7 +187,5 @@ class Array:
             float: The value of the smallest element in the array.
 
         """
-        
+
         pass
-
-
