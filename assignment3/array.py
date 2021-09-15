@@ -1,13 +1,12 @@
-
+from ast import If
 from pydoc import Doc
+from turtle import shape
 from matplotlib import docstring
 
 
 class Array:
-
     def __init__(self, shape, *values):
         """
-
         Initialize an array of 1-dimensionality. Elements can only be of type:
         - int
         - float
@@ -27,18 +26,18 @@ class Array:
         # Check if the values are of valid type
 
         # Optional: If not all values are of same type, all are converted to floats.
-
+        self.values = []
+        self.shape = ()
         pass
-
-    def __shape__(self, rows, columns):
-        """Defines the array demention by variables rows, columns.
-
+    def __shapevalue__(self):
+        """Check the array shape to match the input values. And the array input type.
+        
         Returns:
-            tuple: in integers and refers to the demnetionality of the array.
-
+            True: if both the array shape match value amount and array values are in the same data type.
+            False: if not True.
         """
-        pass
-
+        
+        
     def __str__(self):
         """Returns a nicely printable string representation of the array.
 
@@ -46,7 +45,10 @@ class Array:
             str: A string representation of the array.
 
         """
-        pass
+        # for i in range(len(self.vlaues)):
+        #     self.values.append(self.values[i])
+        print(str(list(self.values)))
+
 
     def __add__(self, other):
         """Element-wise adds Array with another Array or number.
@@ -168,8 +170,8 @@ class Array:
 
         Returns:
             Array: An array of booleans with True where the two arrays match and False where they do not.
-                   Or if `other` is a number, it returns True where the array is equal to the number and False
-                   where it is not.
+            Or if `other` is a number, it returns True where the array is equal to the number and False
+            where it is not.
 
         Raises:
             ValueError: if the shape of self and other are not equal.
