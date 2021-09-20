@@ -36,7 +36,7 @@ The current implements are not able to handle nD arrays.
 ### Usage
 
 It can be used to perform basic methmetics, __add__ , __sub__ , __mul__ , __radd__ , __rsub__ and __rmul__ , you want to check if the argument is a scalar or an array with the same shape. If it is something else you can return NotImplemented.
-The r methods The methods radd , rsub and rmul are called to implement the arithmetic operations add , sub , mul with swapped 2 operands. The r methods are only called, if the left (first) operand does not support the operation provided and the operands are of dierent type. For example, imagine we have an array
+The r methods The methods radd , rsub and rmul are called to implement the arithmetic operations add , sub , mul with swapped 2 operands. The r methods are only called, if the left (first) operand does not support the operation provided and the operands are of different type. For example, imagine we have an array
 
 ```python
 1 array1 = Array ((6 ,) , 1, 2, 3, 4, 5, 6)
