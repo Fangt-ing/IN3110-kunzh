@@ -1,6 +1,7 @@
 # from ast import If
 # from msilib.schema import SelfReg
 # from pydoc import Doc
+from itertools import chain
 from time import sleep
 # from turtle import shape
 # from xmlrpc.client import boolean
@@ -40,13 +41,25 @@ class Array:
         self.__valuetype__()
         self.__shapematch__()
 
-    def __getitem__(self, item1):
-        # if len(list(item)) == 1:
-        # if len(self.demention) == 1:
-        return self.elements[item1]
-        # if len(list(item)) == 2:
-        # if len(self.demention) == 2:
-        #     return self.elements[item1][item2]
+    def __getitem__(self, *item):
+        if len(item) == 1:
+            return self.elements[item[0]]
+        elif len(item) == 2:
+            nd =[]
+            for i in range(self.demention[0]):
+                nd.append(self.elements[self.demention[-1]*i: self.demention[-1]*(i+1)])
+            return (nd[item[0]])[item[1]]
+        
+    # def nd (self):
+    #     """ Flattens the N- dimensional array of values into a 1-
+    #     dimensional array .
+    #     Returns :
+    #     list : flat list of array values .
+    #     """
+    #     nd=[]
+    #     for _ in range(len(self.demention[1:])):
+    #         nd = list(chain(*nd))
+    #         return str(nd)
 
     def __valuetype__(self):
         """Checks the array input values, and the array input type.
@@ -106,6 +119,11 @@ class Array:
             nd =[]
             for i in range(self.demention[0]):
                 nd.append(self.elements[self.demention[-1]*i: self.demention[-1]*(i+1)])
+            return str(nd)
+        elif len(self.demention)>2:
+            nd=[]
+            for i in range(len(self.demention[0])):
+                nd.append(self.elements[self.demention[1:]])
             return str(nd)
 
     def __add__(self, other):
