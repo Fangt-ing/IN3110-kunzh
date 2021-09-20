@@ -1,11 +1,13 @@
-from ast import If
-from msilib.schema import SelfReg
-from pydoc import Doc
+# from ast import If
+# from msilib.schema import SelfReg
+# from pydoc import Doc
 from time import sleep
-from turtle import shape
-from xmlrpc.client import boolean
-from matplotlib import docstring
+# from turtle import shape
+# from xmlrpc.client import boolean
+# from matplotlib import docstring
 
+
+# from numpy import true_divide
 
 class Array:
     def __init__(self, shape, *values):
@@ -29,9 +31,22 @@ class Array:
         # Check if the values are of valid type
 
         # Optional: If not all values are of same type, all are converted to floats.
+        # if len(list(values)) > 1:
         self.elements = list(values)
-        # self.demention = tuple(shape)    
-        self.__str__()    
+        # elif len(list(values)) == 1:
+            # self.elements = values
+        self.demention = tuple(shape)
+        self.__str__()
+        self.__valuetype__()
+        self.__shapematch__()
+
+    def __getitem__(self, item1):
+        # if len(list(item)) == 1:
+        # if len(self.demention) == 1:
+        return self.elements[item1]
+        # if len(list(item)) == 2:
+        # if len(self.demention) == 2:
+        #     return self.elements[item1][item2]
 
     def __valuetype__(self):
         """Checks the array input values, and the array input type.
@@ -40,17 +55,23 @@ class Array:
             True: if both the array values are in the same data type.
             False: if not True.
         """
-        if type(self.elements) == int or type(self.elements) == float or\
-        type(self.elements) == boolean:
+        if type(self.elements) == list:
             for i in range(len(self.elements)):
-                if i < len(self.elements) - 1:
-                    # Check the if all elements' type matches
-                    return type(self.elements[i]) == type(self.elements[i + 1])
-        else:
-            print(
-                'Array values must have the same data type of either int, float or bolean.'
-            )
-            return False
+                if type(self.elements[i]) in [int, float, bool]:
+                    if i < len(self.elements) - 1:
+                        if type(self.elements[i]) == type(self.elements[i + 1]):
+                            return True
+                        else:
+                            raise ValueError('Values are not the same type.')
+                    else:
+                        raise ValueError('Values are not the same type.')
+                else:
+                    return False
+        elif type(self.elements) != list:
+            if type(self.elements) in [int, float, bool]:
+                return True
+            else:
+                return False
 
     def __shapematch__(self):
         """Checks the demention of the array with the amount of values.
@@ -59,13 +80,15 @@ class Array:
             True: if demention values matches the amount of values.
             False: if not True.
         """
-        if len(self.demention) == 1:
-            if self.demention[0] == len(self.elements):
-                return True
-        else:
-            print(
-                "THe array can be only 1D array, please assing a correct value."
-            )
+        size = 1
+        for i in range(len(self.demention)):
+            if self.__valuetype__():
+                size = size * self.demention[i]
+                if size == len(self.elements):
+                    return True
+            else:
+                raise ValueError(
+                'The shape does not match the amount of the input values.')            
 
     def __str__(self):
         """Returns a nicely printable string representation of the array.
@@ -76,7 +99,14 @@ class Array:
         """
         # for i in range(len(self.vlaues)):
         #     self.values.append(self.values[i])
-        return str(self.elements)
+        if len(self.demention) == 1:
+            return str(self.elements)
+        # elif len(self.demention) > 1:
+        elif len(self.demention) == 2:
+            nd =[]
+            for i in range(self.demention[0]):
+                nd.append(self.elements[self.demention[-1]*i: self.demention[-1]*(i+1)])
+            return str(nd)
 
     def __add__(self, other):
         """Element-wise adds Array with another Array or number.
@@ -91,9 +121,18 @@ class Array:
             Array: the sum as a new array.
 
         """
-
-        # check that the method supports the given arguments (check for data type and shape of array)
-
+        # new_a = Array(other)
+        new_a = []
+        if self.__valuetype__():
+            if type(other) == list:
+                for i in range(len(self.elements)):
+                    new_a.append(self.elements[i] + other[i])
+            elif type(other) in [int, float]:
+                for i in range(len(self.elements)):
+                    new_a.append(self.elements[i] + other)
+            return new_a
+        elif not self.__shapematch__() or not self.__valuetype__():
+            return "NotImplemented!"
 
     def __radd__(self, other):
         """Element-wise adds Array with another Array or number.
@@ -108,14 +147,7 @@ class Array:
             Array: the sum as a new array.
 
         """
-        # shapematch is not needed for this.
-        if self.__valuetype__():
-            for i in range(len(self.elements)):
-                self.elements[i] = self.elements[i] + other
-            return self.elements
-        elif not self.__shapematch__() or not self.__valuetype__():
-            return "NotImplemented!"
-        
+        return self.__add__(other)
 
     def __sub__(self, other):
         """Element-wise subtracts an Array or number from this Array.
@@ -130,7 +162,17 @@ class Array:
             Array: the difference as a new array.
 
         """
-        pass
+        new_a = []
+        if self.__valuetype__():
+            if type(other) == list:
+                for i in range(len(self.elements)):
+                    new_a.append(self.elements[i] - other[i])
+            elif type(other) in [int, float]:
+                for i in range(len(self.elements)):
+                    new_a.append(self.elements[i] - other)
+            return new_a
+        elif not self.__shapematch__() or not self.__valuetype__():
+            return "NotImplemented!"
 
     def __rsub__(self, other):
         """Element-wise subtracts this Array from a number or Array.
@@ -146,12 +188,7 @@ class Array:
 
         """
         # shapematch is not need.
-        if self.__valuetype__():
-            for i in range(len(self.elements)):
-                self.elements[i] = self.elements[i] - other
-            return self.elements
-        elif not self.__shapematch__() or not self.__valuetype__():
-            return "NotImplemented!"
+        return self.__sub__(other)
 
     def __mul__(self, other):
         """Element-wise multiplies this Array with a number or array.
@@ -166,7 +203,17 @@ class Array:
             Array: a new array with every element multiplied with `other`.
 
         """
-        pass
+        new_a = []
+        if self.__valuetype__():
+            if type(other) == list:
+                for i in range(len(self.elements)):
+                    new_a.append(self.elements[i] * other[i])
+            elif type(other) in [int, float]:
+                for i in range(len(self.elements)):
+                    new_a.append(self.elements[i] * other)
+            return new_a
+        elif not self.__shapematch__() or not self.__valuetype__():
+            return "NotImplemented!"
 
     def __rmul__(self, other):
         """Element-wise multiplies this Array with a number or array.
@@ -184,12 +231,6 @@ class Array:
         # Hint: this solution/logic applies for all r-methods
         return self.__mul__(other)
 
-    def __elementscheck__(self, other):
-        '''Returns the elements in the given array.
-        '''
-        for i in range(len(self.elements)):
-            return self.elements[i] == other[i]
-        
     def __eq__(self, other):
         """Compares an Array with another Array.
 
@@ -203,23 +244,29 @@ class Array:
             bool: True if the two arrays are equal (identical). False otherwise.
 
         """
+        eq=False
         if type(other) != list:
             return False
-        
+
+        # elif type(other) == list:
+        #     # tyother = lambda x: (type(x[i]) == type(x[i+1]) for i in range(len(x)-1))
+            
+        #     if self.__valuetype__():
+        #         if len(self.elements) == len(other):
+        #             return True
         elif type(other) == list:
-            if len(self.elements) != len(len(other)):
+            if len(self.elements) != len(other):
                 return False
-            elif len(self.elements) == len(len(other)):
-                for i in range(self.elements):
-                    if self.elements[i] == other[i]:
+            elif len(self.elements) == len(other):
+                for i in range(len(self.elements)):
+                    if type(self.elements[i]) == type(other[i]):
                         eq = True
-                    elif self.elements[i] == other[i]:
+                    elif type(self.elements[i]) != type(other[i]):
                         eq = False
                         break
                 return eq
-            elif type(other) != int or float or bool:
+            elif type(other) != (int or float or bool):
                 return False
-            
 
     def is_equal(self, other):
         """Compares an Array element-wise with another Array or number.
@@ -240,11 +287,11 @@ class Array:
 
         """
         if type(other) != list:
-            if type(other) == int or float or bool:
-                pass
+            if type(other) in [int, float, bool]:
+                return 'Valid value type.'
             else:
                 raise TypeError('The values of the array is not correct, \
-                    it should be at either an in or float or boolean type.')
+                    it should be at either an int or float or boolean type.')
         equal = []
         if type(other) == list:
             if len(self.elements) != len(other):
@@ -268,5 +315,8 @@ class Array:
             float: The value of the smallest element in the array.
 
         """
-
-        pass
+        for i in range(len(self.elements)):
+            if type(self.elements[i]) in [int, float]:
+                return float(min(self.elements))
+            else:
+                print('Value type should be either int or float.')
