@@ -1,14 +1,12 @@
-# from ast import If
-# from msilib.schema import SelfReg
-# from pydoc import Doc
+from ast import If
+from msilib.schema import SelfReg
+from pydoc import Doc
 from itertools import chain
 from time import sleep
-# from turtle import shape
-# from xmlrpc.client import boolean
-# from matplotlib import docstring
+from turtle import shape
+from xmlrpc.client import boolean
+from matplotlib import docstring
 
-
-# from numpy import true_divide
 
 class Array:
     def __init__(self, shape, *values):
