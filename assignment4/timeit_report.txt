@@ -1,34 +1,52 @@
-Time consumed for random array is 0.0025895000000000223.
-Time costed in manual_timing is 0.005481719970703125.
-Time consumed for random array is 0.002526500000000098.
-Time costed in manual_timing is 0.006022930145263672.
-Time consumed for random array is 0.002579599999999793.
-Time costed in manual_timing is 0.004976987838745117.
-Time consumed for random array is 0.0026725000000000776.
-Time costed in manual_timing is 0.00600123405456543.
-Time consumed for random array is 0.0025374999999998593.
-Time costed in manual_timing is 0.0070078372955322266.
+Time consumed for random array round(1) is 0.0032225999999999644.
+Time costed in manual_timing round(1) is 0.00499725341796875.
 
-Time consumed for loop array is 0.04486520000000027.
-Time costed in manual_timing is 0.07999014854431152.
-Time consumed for loop array is 0.044385700000000305.
-Time costed in manual_timing is 0.09485054016113281.
-Time consumed for loop array is 0.045755800000000235.
-Time costed in manual_timing is 0.06408190727233887.
-Time consumed for loop array is 0.04493930000000024.
-Time costed in manual_timing is 0.07094526290893555.
-Time consumed for loop array is 0.04553790000000024.
-Time costed in manual_timing is 0.07000184059143066.
+Time consumed for random array round(2) is 0.003189199999999559.
+Time costed in manual_timing round(2) is 0.0069980621337890625.
 
-Time consumed for snake array is 0.44793729999999954.
-Time costed in manual_timing is 0.5479938983917236.
-Time consumed for snake array is 0.4766043.
-Time costed in manual_timing is 0.48003292083740234.
-Time consumed for snake array is 0.46786569999999994.
-Time costed in manual_timing is 0.4479544162750244.
-Time consumed for snake array is 0.43414920000000023.
-Time costed in manual_timing is 0.47199082374572754.
-Time consumed for snake array is 0.4780452000000004.
-Time costed in manual_timing is 0.43805861473083496.
+Time consumed for random array round(3) is 0.003166000000000224.
+Time costed in manual_timing round(3) is 0.004998922348022461.
 
-The slowest function is snake_loop(), took 0.4780452000000004s at the round 5.
+Time consumed for random array round(4) is 0.003139000000000003.
+Time costed in manual_timing round(4) is 0.007000923156738281.
+
+Time consumed for random array round(5) is 0.0031876999999997935.
+Time costed in manual_timing round(5) is 0.006001949310302734.
+
+
+
+Time consumed for loop array round(1) is 0.04510419999999993.
+Time costed in manual_timing round(1) is 0.06099534034729004.
+
+Time consumed for loop array round(2) is 0.04633049999999983.
+Time costed in manual_timing round(2) is 0.04900050163269043.
+
+Time consumed for loop array round(3) is 0.0478070000000006.
+Time costed in manual_timing round(3) is 0.048023223876953125.
+
+Time consumed for loop array round(4) is 0.04570339999999984.
+Time costed in manual_timing round(4) is 0.045957088470458984.
+
+Time consumed for loop array round(5) is 0.04602869999999992.
+Time costed in manual_timing round(5) is 0.049004316329956055.
+
+
+
+Time consumed for snake array round(1) is 0.4632942999999994.
+Time costed in manual_timing round(1) is 0.5069959163665771.
+
+Time consumed for snake array round(2) is 0.45585269999999944.
+Time costed in manual_timing round(2) is 0.5219936370849609.
+
+Time consumed for snake array round(3) is 0.5159915000000002.
+Time costed in manual_timing round(3) is 0.5399990081787109.
+
+Time consumed for snake array round(4) is 0.43686010000000053.
+Time costed in manual_timing round(4) is 0.48700976371765137.
+
+Time consumed for snake array round(5) is 0.4427020000000006.
+Time costed in manual_timing round(5) is 0.48404765129089355.
+
+
+
+The slowest function is snake_loop(), took 0.5159915000000002s at the round 3.

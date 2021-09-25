@@ -1,2 +1,2 @@
-The slowest function in manual_timing is snake_loop() took 0.5479938983917236s
-The slowest function in timeit_timing is snake_loop() took 0.4780452000000004s
+The slowest function in manual_timing is snake_loop() took 0.5399990081787109s
+The slowest function in timeit_timing is snake_loop() took 0.5159915000000002s

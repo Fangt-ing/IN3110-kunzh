@@ -31,24 +31,24 @@ stp='import test_slow_rectangle as tr'
 with open('timeit_report.txt', 'w') as f:
     rdt = tt.repeat(stmt='tr.random_array(1e5)', setup=stp, number=1, repeat=5)
     for i in range(len(rdt)):
-        f.write('Time consumed for random array is ' + str(rdt[i]) + '.\n')
-        f.write('Time costed in manual_timing is ' + str(numl[i]) + '.\n')
+        f.write('Time consumed for random array round(' + str(i+1) + ')' + ' is ' + str(rdt[i]) + '.\n')
+        f.write('Time costed in manual_timing round(' + str(i+1) + ')' + ' is ' + str(numl[i]) + '.\n\n')
     tml=np.append(tml, rdt)
-    f.write('\n')
+    f.write('\n\n')
         
     lpt = tt.repeat('tr.loop(tr.random_array(1e5))', stp, number=1, repeat=5)
     for i in range(len(rdt)):
-        f.write('Time consumed for loop array is ' + str(lpt[i]) + '.\n')
-        f.write('Time costed in manual_timing is ' + str(numl[5+i]) + '.\n')
+        f.write('Time consumed for loop array round(' + str(i+1) + ')' + ' is ' + str(lpt[i]) + '.\n')
+        f.write('Time costed in manual_timing round(' + str(i+1) + ')' + ' is ' + str(numl[5+i]) + '.\n\n')
     tml=np.append(tml, lpt)
-    f.write('\n')
+    f.write('\n\n')
         
     snt = tt.repeat('tr.snake_loop(tr.random_array(1e5))', stp, number=1, repeat=5)
     for i in range(len(rdt)):
-        f.write('Time consumed for snake array is ' + str(snt[i]) + '.\n')
-        f.write('Time costed in manual_timing is ' + str(numl[5*2+i]) + '.\n')
+        f.write('Time consumed for snake array round(' + str(i+1) + ')' + ' is ' + str(snt[i]) + '.\n')
+        f.write('Time costed in manual_timing round(' + str(i+1) + ')' + ' is ' + str(numl[5*2+i]) + '.\n\n')
     tml=np.append(tml, snt)
-    f.write('\n')
+    f.write('\n\n')
     
     maxnum=max(tml)
     maxindex=np.array(tml).argmax()
