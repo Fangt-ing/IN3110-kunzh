@@ -1,3 +1,4 @@
 # ignore vscode settings
 # .vscode
 __pycache__/
+*.ipynb
