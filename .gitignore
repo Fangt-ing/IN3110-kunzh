@@ -1,4 +1,8 @@
 # ignore vscode settings
 # .vscode
-__pycache__/
+
+# ignore directory
+/__pycache__/
+
+# ignore file type
 *.ipynb
