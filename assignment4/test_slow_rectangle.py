@@ -1,4 +1,5 @@
 import numpy as np
+import time as tm
 
 
 def random_array(size, dim=3):
@@ -91,7 +92,6 @@ import matplotlib.pyplot as plt
 
 #if running in a jupyter notebook you might this inline
 #matplotlib inline
-
 plt.figure(figsize=(10, 10))
 plt.title('Plot of Your Filters')
 plt.plot(array[:, 0], array[:, 1], 'k.')
