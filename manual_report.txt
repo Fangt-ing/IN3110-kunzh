@@ -1,0 +1,20 @@
+
+Time consumed to execute array is 0.0050006.
+Time consumed to execute filtered_array is 0.08400.
+Time consumed to execute filtered_array_snack is 0.46600.
+
+Time consumed to execute array is 0.0029988.
+Time consumed to execute filtered_array is 0.04703.
+Time consumed to execute filtered_array_snack is 0.47301.
+
+Time consumed to execute array is 0.0029993.
+Time consumed to execute filtered_array is 0.04901.
+Time consumed to execute filtered_array_snack is 0.44806.
+
+Time consumed to execute array is 0.0039473.
+Time consumed to execute filtered_array is 0.05401.
+Time consumed to execute filtered_array_snack is 0.44905.
+
+Time consumed to execute array is 0.0020485.
+Time consumed to execute filtered_array is 0.05097.
+Time consumed to execute filtered_array_snack is 0.44501.
