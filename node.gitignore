@@ -116,9 +116,3 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-
-# ignore directory
-/__pycache__/
-
-# ignore file type
-*.ipynb
