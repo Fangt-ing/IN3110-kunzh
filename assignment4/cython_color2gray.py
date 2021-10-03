@@ -1,11 +1,12 @@
 from email.mime import image
 import sys, os, cv2, numba
+from urllib.parse import _NetlocResultMixinBase
 import time as tm
 from numba import jit
 from python_color2gray import python_color2gray
 from numpy_color2gray import numpy_color2gray
 
-@jit(nopython=True)
+
 def grayscale_filter(image):
     """
     Takes image as input of extention with '.jpg', '.png', '.jpeg', '.bmp', returns gray_scale version. Weighted sum of RGB values are 0.07, 0.72 and 0.21 respectively.
