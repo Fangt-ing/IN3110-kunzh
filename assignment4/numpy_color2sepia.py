@@ -64,7 +64,7 @@ def report(filename):
         f.write("Timing : numpy_color2sepia\n")
         f.write(f"Image demension: {demension}\n")
         f.write(f"Average runtime running numpy_color2sepia after 3 runs : {numpyt:f} s\n")
-        f.write(f"Average runtime of numba_color2gray is {pythont/numpyt:.3f} times faster than python_color2gray\n")
+        f.write(f"Average runtime of numba_color2sepia is {pythont/numpyt:.3f} times faster than python_color2sepia\n")
         f.write("Timing performed using: time.perf_counter()\n")
 
 

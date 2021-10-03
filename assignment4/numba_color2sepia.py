@@ -1,9 +1,13 @@
 import os, sys, cv2
 import time as tm
 import numpy as np
+from numba import jit
+from python_color2sepia import python_color2sepia
+from numpy_color2sepia import numpy_color2sepia
 
 
-def sepia_filter(image):
+@jit(nopython=True)
+def sepiascale_filter(image):
     """
     Takes image as input of extention with '.jpg', '.png', '.jpeg', '.bmp', returns sepia_scale version. Weighted sum of RGB values are 0.07, 0.72 and 0.21 respectively.
     Channel orders are 0(B), 1(G) and 2(R).
@@ -13,14 +17,13 @@ def sepia_filter(image):
     Returns:
         image (ndarray): the sepia_scaled image with item values of the set weighted values as unit8 type.
     """
-    # multiply each color value in the corresponding channel of a pixel 
-    # with the RGB ordered matrix given here
-    sepia = [[0.393, 0.769, 0.189], [0.349, 0.686, 0.168], [0.272, 0.534, 0.131]]
-
+    sepia = np.array([[0.272, 0.534, 0.131], [0.349, 0.686, 0.168], [0.393, 0.769, 0.189]])
+    for i in range(len(image)):
+        image[i] = image[i]  @ sepia.T
     return image
 
 
-def numpy_color2sepia(filename):
+def numba_color2sepia(filename):
     """
     Takes the given image file, process it and save it to sepia scale.
     Args:
@@ -38,33 +41,42 @@ def numpy_color2sepia(filename):
     image = cv2.imread(filename)
     global demension
     demension = image.shape
-    numpyname = sys.argv[0].strip('.\\').split('.')
-    sepia_image = sepia_filter(image.astype('uint16'))
-    cv2.imwrite(f"{numpyname[0]}_sepia{ext}", sepia_image)
-
+    pythonname = sys.argv[0].strip('.\\').split('.')
+    sepia_image = sepiascale_filter(image.astype("float64"))
+    cv2.imwrite(f"{pythonname[0]}_sepiascale{ext}", sepia_image)
 
 def report(filename):
     """
-    Record the time and its average of sepia_filter() for 3 runs.
-    The time and avg_time is then write to numpy report color2sepia.txt
+    Record the time and its average of sepiascale_filter() for 3 runs.
+    The time and avg_time is then write to python report color2sepia.txt
     Args:
         The image file to be processed.
     """
-
-    ts = tm.perf_counter()  # ts = time start
+    python0=tm.perf_counter()
+    for i in range(3):
+        python_color2sepia(filename)
+    python1=tm.perf_counter()
+    pythont=(python1 - python0)/3
+    
+    numpy0=tm.perf_counter()
     for i in range(3):
         numpy_color2sepia(filename)
-    te = tm.perf_counter()  # te = time end
-    avg_time = (te - ts) / 3
-
-    with open(f"numpy_report_color2sepia.txt", "w") as f:
-        f.write("Timing : numpy_color2sepia\n")
+    numpy1=tm.perf_counter()
+    numpyt=(numpy1 - numpy0)/3
+    
+    numba0=tm.perf_counter()
+    for i in range(3):
+        numba_color2sepia(filename)
+    numba1=tm.perf_counter()
+    numbat=(numba1 - numba0)/3
+    
+    with open(f"numba_report_color2sepia.txt", "w") as f:
+        f.write("Timing : python_color2sepia\n")
         f.write(f"Image demension: {demension}\n")
-        f.write(
-            f"Average runtime running numpy_color2sepia after 3 runs : {avg_time:f} s\n"
-        )
+        f.write(f"Average runtime running python_color2sepia after 3 runs : {numbat} s\n")
+        f.write(f"Average runtime of numba_color2sepia is {pythont/numbat:.3f} times faster than python_color2sepia\n")
+        f.write(f"Average runtime of numba_color2sepia is {numpyt/numbat:.3f} times slower than numpy_color2sepia\n")
         f.write("Timing performed using: time.perf_counter()\n")
-
-
+        
 if __name__ == "__main__":
     report('rain.jpg')
