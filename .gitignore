@@ -11,3 +11,10 @@ __pycache__/
 *test*
 *tests*
 *temp*
+
+# adviced ignore
+*.pyc
+.cache/*
+*.swp
+docs/_build/*
+docs/build/*
