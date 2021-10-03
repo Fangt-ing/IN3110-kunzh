@@ -8,7 +8,7 @@ __pycache__/
 *.ipynb
 
 # ignore test files
-*test*
+test.py
 *tests*
 *temp*
 
