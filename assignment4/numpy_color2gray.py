@@ -1,11 +1,7 @@
-import sys
-import os
-import cv2
+import sys, os, cv2
+import numpy as np
 import time as tm
-
-# filename=sys.argv[0].strip('.\\').split('.')
-# filename=filename.split('.')
-
+from python_color2gray import python_color2gray
 
 def grayscale_filter(image):
     """
@@ -21,15 +17,16 @@ def grayscale_filter(image):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     # grayscale_filter_image = grayscale_filter_image.astype('unit8'), this function converts the gray_scaled image item values into integer for cv2 to understand.
     # cv2.imwrite('rain_grascale.jpeg', dest) this saves the grascaled image.
-    for r in range(len(image)):  # rows
-        for c in range(len(image[r])):  # columns
-            image[r, c] = image[r, c, 0] * 0.07 + image[
-                r, c, 1] * 0.72 + image[r, c, 2] * 0.21
+    # for r in range(len(image)):  # rows
+    #     for c in range(len(image[r])):  # columns
+    #         image[r, c] = image[r, c, 0] * 0.07 + image[
+    #             r, c, 1] * 0.72 + image[r, c, 2] * 0.21
+    image = image[:, :, 0]*0.07 + image[:, :, 1]*0.72 + image[:, :, 2]*0.21
 
     return image.astype('uint8')
 
 
-def python_color2gray(filename):
+def numpy_color2gray(filename):
     """
     Takes the given image file, process it and save it to gray scale.
     Args:
@@ -51,6 +48,13 @@ def python_color2gray(filename):
     grayed_image = grayscale_filter(img)
     cv2.imwrite(f"{pythonname[0]}_grayscale{ext}", grayed_image)
 
+def python_time():
+    t0 = tm.perf_counter()
+    for i in range(3):
+        python_color2gray('rain.jpg')
+    t1 = tm.perf_counter()
+    python_avg = (t1-t0)/3
+    return python_avg
 
 def report(filename):
     """
@@ -62,16 +66,17 @@ def report(filename):
 
     ts = tm.perf_counter()  # ts = time start
     for i in range(3):
-        python_color2gray(filename)
+        numpy_color2gray(filename)
     te = tm.perf_counter()  # te = time end
     avg_time = (te - ts) / 3
 
-    with open(f"python_report_color2gray.txt", "w") as f:
+    with open(f"numpy_report_color2gray.txt", "w") as f:
         f.write("Timing : python_color2gray\n")
         f.write(f"Image demension: {demension}\n")
         f.write(
             f"Average runtime running python_color2gray after 3 runs : {avg_time:f} s\n"
         )
+        f.write(f"Average runtime of numpy_color2gray is {python_time()/avg_time:.3f} times faster than python_color2gray\n")
         f.write("Timing performed using: time.perf_counter()\n")
 
 
