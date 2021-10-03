@@ -1,19 +1,19 @@
-Time consumed to execute array round(1) is 0.00499725341796875.
-Time consumed to execute array round(2) is 0.0069980621337890625.
-Time consumed to execute array round(3) is 0.004998922348022461.
-Time consumed to execute array round(4) is 0.007000923156738281.
-Time consumed to execute array round(5) is 0.006001949310302734.
+Time consumed to execute array round(1) is 0.006011486053466797.
+Time consumed to execute array round(2) is 0.003989219665527344.
+Time consumed to execute array round(3) is 0.006999969482421875.
+Time consumed to execute array round(4) is 0.006004810333251953.
+Time consumed to execute array round(5) is 0.00699925422668457.
 
-Time consumed to execute filtered_array round(1) is 0.06099534034729004.
-Time consumed to execute filtered_array round(2) is 0.04900050163269043.
-Time consumed to execute filtered_array round(3) is 0.048023223876953125.
-Time consumed to execute filtered_array round(4) is 0.045957088470458984.
-Time consumed to execute filtered_array round(5) is 0.049004316329956055.
+Time consumed to execute filtered_array round(1) is 0.07634520530700684.
+Time consumed to execute filtered_array round(2) is 0.05299711227416992.
+Time consumed to execute filtered_array round(3) is 0.049031972885131836.
+Time consumed to execute filtered_array round(4) is 0.04798746109008789.
+Time consumed to execute filtered_array round(5) is 0.04598522186279297.
 
-Time consumed to execute filtered_array_snake round(1) is 0.5069959163665771.
-Time consumed to execute filtered_array_snake round(2) is 0.5219936370849609.
-Time consumed to execute filtered_array_snake round(3) is 0.5399990081787109.
-Time consumed to execute filtered_array_snake round(4) is 0.48700976371765137.
-Time consumed to execute filtered_array_snake round(5) is 0.48404765129089355.
+Time consumed to execute filtered_array_snake round(1) is 0.4640011787414551.
+Time consumed to execute filtered_array_snake round(2) is 0.49300169944763184.
+Time consumed to execute filtered_array_snake round(3) is 0.49503564834594727.
+Time consumed to execute filtered_array_snake round(4) is 0.4499542713165283.
+Time consumed to execute filtered_array_snake round(5) is 0.44004344940185547.
 
-The slowest function is snake_loop(), took 0.5399990081787109s at the round 3.
+The slowest function is snake_loop(), took 0.49503564834594727s at the round 3.

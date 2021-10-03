@@ -1,4 +1,7 @@
-import test_slow_rectangle as tr
+# import test_slow_rectangle as tr
+from test_slow_rectangle import random_array
+from test_slow_rectangle import loop
+from test_slow_rectangle import snake_loop
 import time as tm
 import numpy as np
 import math
@@ -11,7 +14,7 @@ tm3=[]
 with open('manual_report.txt', 'w') as f:
     for i in range(5):
         t10 = tm.time()
-        tr.random_array(1e5)
+        random_array(1e5)
         t11 = tm.time()
         duration1 = t11-t10
         tm1.append(duration1)
@@ -21,7 +24,7 @@ with open('manual_report.txt', 'w') as f:
 
     for i in range(5):
         t20 = tm.time()
-        tr.loop(tr.random_array(1e5))
+        loop(random_array(1e5))
         t21 = tm.time()
         duration2 = t21 - t20
         tm2.append(duration2)
@@ -31,7 +34,7 @@ with open('manual_report.txt', 'w') as f:
 
     for i in range(5):
         t30 = tm.time()
-        tr.snake_loop(tr.random_array(1e5))
+        snake_loop(random_array(1e5))
         t31 = tm.time()
         duration3 = t31 - t30
         tm3.append(duration3)
