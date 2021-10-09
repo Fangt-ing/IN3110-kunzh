@@ -2,7 +2,7 @@
 .vscode
 
 # ignore directory
-__pycache__/
+# __pycache__/
 
 # ignore file type
 *.ipynb
