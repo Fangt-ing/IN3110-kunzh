@@ -3,8 +3,10 @@ import sys, os, cv2, numba
 from urllib.parse import _NetlocResultMixinBase
 import time as tm
 from numba import jit
-from python_color2gray import python_color2gray
-from numpy_color2gray import numpy_color2gray
+# from python_color2gray import python_color2gray
+# from numpy_color2gray import numpy_color2gray
+from . import python_color2gray
+from . import numpy_color2gray
 
 
 def grayscale_filter(image):

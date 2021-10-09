@@ -1,7 +1,9 @@
 import sys, os, cv2
 import numpy as np
 import time as tm
-from python_color2gray import python_color2gray
+# from python_color2gray import python_color2gray
+
+from . import python_color2gray
 
 def grayscale_filter(image):
     """

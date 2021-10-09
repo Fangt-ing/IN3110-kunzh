@@ -1,7 +1,8 @@
 import os, sys, cv2
 import time as tm
 import numpy as np
-from python_color2sepia import python_color2sepia
+# from python_color2sepia import python_color2sepia
+from . import python_color2sepia
 
 
 def sepia_filter(image):

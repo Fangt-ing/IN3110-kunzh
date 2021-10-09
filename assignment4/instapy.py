@@ -1,3 +1,4 @@
+import instapy as inp
 
 
 

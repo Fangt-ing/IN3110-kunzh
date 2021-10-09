@@ -2,8 +2,10 @@ import os, sys, cv2
 import time as tm
 import numpy as np
 from numba import jit
-from python_color2sepia import python_color2sepia
-from numpy_color2sepia import numpy_color2sepia
+# from python_color2sepia import python_color2sepia
+# from numpy_color2sepia import numpy_color2sepia
+from . import python_color2sepia
+from . import numpy_color2sepia
 
 
 @jit(nopython=True)

@@ -2,8 +2,10 @@ from email.mime import image
 import sys, os, cv2, numba
 import time as tm
 from numba import jit
-from python_color2gray import python_color2gray
-from numpy_color2gray import numpy_color2gray
+# from python_color2gray import python_color2gray
+# from numpy_color2gray import numpy_color2gray
+from . import python_color2gray
+from . import numpy_color2gray
 
 @jit(nopython=True)
 def grayscale_filter(image):
