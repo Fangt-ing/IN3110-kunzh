@@ -1,0 +1,18 @@
+Assignment4
+    Instapy (folder)
+    Readme.md
+	bin (folder)
+	    __init__.py (empty init file)
+	    instapy (script which picks up arguments)
+	    runfile.py (python file that runs the arguments and import the functions from filters)
+
+	filters (this can also be named instapy, a folder)
+	    __init__.py (empty init file)
+	    cython.py
+	    python.py
+	    numbe.py
+	    .... and so on
+
+	test (folder)
+	    __init__.py (empty init file) (i see that i accually forgot this one in my assignment...)
+	    test.py (test program)
