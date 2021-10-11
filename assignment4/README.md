@@ -14,7 +14,7 @@ Opencv 4.5.3
 
 * cProfile_timing_.py compares the slowest function runned by using 2 different menthod defined in manual_timing_.py and timeit_timing_.py. Sata is saved to cProfile_report.txt.
 
-## Task 4.1
+## Task 4.1 Python for Instagram
 
 The python_color2gray.py file takes in an image with extension of '.jpg, '.png', '.jpeg', '.bmp'. Then converts the image file to a grayed image, together it generates a report includes the following:
 
@@ -25,108 +25,16 @@ Average runtime running python_color2gray after 3 runs : x. xxxxxx s
 Timing performed using : xyz
 ```
 
-```python
-"To be specified"
-```
+The task includes ```greyscale_filter()```. When certain image file are input, the functions will return filtered image files.
 
-> test
+## 4.2 Sepia Filter - Add Vintage Style to your Images
 
-* for list titles
+The task includes```sepia_filter()```. When certain image file are input, the functions will return filtered image files.
 
-1. Do this.
-1. Do that.
-1. Done.
+## 4.3 The Package
 
-0. Do this.
-0. Do that.
-0. Done.
+In this package, according to requirements, it included filters and new function```grayscale_image(input filename, output filename=None)``` and ```sepia_image(input filename, output filename=None)``` as specified, when image file are fed into these functions they return filtered images respectively.
 
-...
-08. Item
-09. Item
-10. Item
-11. Item
-...
+## 4.4 User interface
 
-* Foo
-* Bar
-* Baz
-
-1. Foo
-1. Bar
-1. Baz
-
-1. Foo
-   * Bar
-1. Baz
-
-<h1>Inline HTML heading</h1>
-
-For more information, see <https://www.example.com/>.
-`https://www.example.com`
-[https://www.example.com]
-"https://www.example.com"
-'https://www.example.com'
-
----
-one
-
-- - -
-two
-
-***
-three
-
-* * *
-foure
-
-****
-fem
-
----
-six
-
----
-
-**My document**
-
-Lorem ipsum dolor sit amet...
-
-_Another section_
-
-Consectetur adipiscing elit, sed do eiusmod.
-
-Here is some **bold** text.
-
-Here is some *italic* text.
-
-Here is some more __bold__ text.
-
-Here is some more _italic_ text.
-
-`some text`
-
-`some text`
-
-[a link](https://www.example.com/)
-[a link](https://www.example.com/)
-
-```
-#!/bin/bash
-echo Hello world
-```
-
-```bash
-#!/bin/bash
-echo Hello world
-```
-
-<h1 align="center"><img src="https://placekitten.com/300/150"/></h1>
-
-This is a file with a top-level HTML heading
-
-[an empty fragment](#)
-
-Some text.
-
-    # Indented code
+Althrough the codes are written, the user interface doesn't seem to work well.

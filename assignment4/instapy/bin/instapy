@@ -1,13 +1,13 @@
-from instapy import greyscale_image, sepia_image
+from instapy import instapy
 import argparse
 
 
 parser = argparse.ArgumentParser(description="Command line user interface for instapy package.")
 parser.add_argument("-f", "--file", required=True, help="The filename of file to apply filter to.")
 parser.add_argument("-se", "--sepia", dest="filter", action="store_const",
-                    const=sepia_image, help="Select sepia filter.")
+                    const=instapy.sepia_image, help="Select sepia filter.")
 parser.add_argument("-g", "--gray", dest="filter", action="store_const",
-                    const=greyscale_image, help="Select gray filter.")
+                    const=instapy.greyscale_image, help="Select gray filter.")
 parser.add_argument("-sc", "--scale", default=1, help="Scale factor to resize image.")
 parser.add_argument("-i", "--implement",
                     choices=["python", "numpy", "numba"], default="numpy", help="Choose the implementation.")
