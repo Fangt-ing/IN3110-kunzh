@@ -14,9 +14,9 @@ def greyscale_filter(image):
     Channel orders are 0(B), 1(G) and 2(R).
     
     Args:
-        image (ndarry): 3D NumPy arrey of the image stored with dementions as [rows, columns, channels]. 
+        image (ndarry): 3D NumPy array of the image stored with dementions as [rows, columns, channels]. 
     Returns:
-        image (ndarrey): the grey_scaled image with item values of the set weighted values as unit8 type.
+        image (ndarray): the grey_scaled image with item values of the set weighted values as unit8 type.
     """
     image = image[:, :, 0]*0.07 + image[:, :, 1]*0.72 + image[:, :, 2]*0.21
     return image
