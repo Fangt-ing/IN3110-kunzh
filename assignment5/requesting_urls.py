@@ -39,5 +39,5 @@ if __name__ == "__main__":
         params={"title": "Main_Page", "action": "info"},
         output="Main_Page",
     )
-
+    # get_html("https://en.wikipedia.org/wiki/Nobel_Prize", output="Nobel_Prize")
 
