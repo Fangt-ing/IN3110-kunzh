@@ -14,6 +14,7 @@ def get_html(url, params=None, output=None):
         response: requested info from the given URL with params (optional).
     """
     rps = rqs.get(url, params=params)
+    html_string = str(rps.text.encode('utf-8'))
 
     if output:
         filename=sys.argv[0]
@@ -27,8 +28,8 @@ def get_html(url, params=None, output=None):
             f.write(f"{rps.url} \n\n")
             f.write(f"{rps.text.encode('utf-8')}")
         os.chdir('..')
-
-    return rps
+    
+    return html_string
 
 
 if __name__ == "__main__":
@@ -39,5 +40,4 @@ if __name__ == "__main__":
         params={"title": "Main_Page", "action": "info"},
         output="Main_Page",
     )
-    # get_html("https://en.wikipedia.org/wiki/Nobel_Prize", output="Nobel_Prize")
 
