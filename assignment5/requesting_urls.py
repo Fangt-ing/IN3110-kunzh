@@ -14,11 +14,11 @@ def get_html(url, params=None, output=None):
         response: requested info from the given URL with params (optional).
     """
     rps = rqs.get(url, params=params)
-    html_string = str(rps.text.encode('utf-8'))
+    html_string = str(rps.text.encode("utf-8"))
 
-    if output:
-        filename=sys.argv[0]
-        dir=filename.split('.')[1].strip('\\')
+    if output != None:
+        filename = sys.argv[0]
+        dir = filename.split(".")[1].strip("\\")
         try:
             os.mkdir(f"{dir}")
         except FileExistsError:
@@ -27,8 +27,8 @@ def get_html(url, params=None, output=None):
         with open(f"{output}.txt", "w") as f:
             f.write(f"{rps.url} \n\n")
             f.write(f"{rps.text.encode('utf-8')}")
-        os.chdir('..')
-    
+        os.chdir("..")
+
     return html_string
 
 
@@ -40,4 +40,3 @@ if __name__ == "__main__":
         params={"title": "Main_Page", "action": "info"},
         output="Main_Page",
     )
-
