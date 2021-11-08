@@ -19,7 +19,7 @@ def find_urls(html_string, base_url=None, output=None):
 
     # find relative url
     frel_url = re.findall(r'<a(?:.)*?href="([\/][^\/](?:.)*?)(?=#|")', html_string)
-    if base_url:
+    if base_url is not None:
         rel_url = [f"{base_url}{url}" for url in frel_url]
     else:
         fbase_url = re.findall(r"https://(?:.)*?(?=/)", full_url[0])

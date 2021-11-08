@@ -22,7 +22,6 @@ def extract_teams():
     bracket_table = bracket_header.find_next("table")
     rows = bracket_table.find_all("tr")
 
-    team_list = []
     team_names = []
     team_urls = []
     team_names_urls={}
