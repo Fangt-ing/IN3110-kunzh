@@ -73,7 +73,7 @@ Files delivered in task are as the following:
 * NBA_player_statistics/players_over_bpg.png
 * NBA_player_statistics/players_over_rpg.png
 
-## 5.6 WIki race with URLs
+## 5.6 Wiki race with URLs
 
 This task aims to find the match to the end url from the given start url, and records the time taken to for the process.
 
