@@ -34,7 +34,7 @@ def find_urls(html_string, base_url=None, output=None):
     url_list = rel_url + same_proto + abs_url
     # url_list = [url for url in url_list]
 
-    if output != None:
+    if output:
         filename = sys.argv[0]
         dir = filename.split(".")[1].strip("\\")
         try:

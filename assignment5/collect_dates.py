@@ -73,7 +73,7 @@ def find_dates(html_string, output=None):
     full_url = re.findall(
         r'"canonical"(?:.)*?href="(https?://(?:.)*?(?="))', html_string
     )
-    if output != None:
+    if output:
         filename = sys.argv[0]
         dir = filename.split(".")[1].strip("\\")
         try:

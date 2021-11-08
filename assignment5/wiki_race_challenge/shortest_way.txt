@@ -1,0 +1,10 @@
+From the start url https://en.wikipedia.org/wiki/Parque_18_de_marzo_de_1938
+To the end url https://en.wikipedia.org/wiki/Bill_Mundell
+Time comsumed: 10.40244569996139 seconds.
+There is no path found in between the start and end urls.
+
+From the start url https://en.wikipedia.org/wiki/Nobel_Prize
+To the end url https://en.wikipedia.org/wiki/Array_data_structure
+Time comsumed: 175.70501299999887 seconds.
+There is no path found in between the start and end urls.
+

@@ -16,7 +16,7 @@ def get_html(url, params=None, output=None):
     rps = rqs.get(url, params=params)
     html_string = str(rps.text.encode("utf-8"))
 
-    if output != None:
+    if output:
         filename = sys.argv[0]
         dir = filename.split(".")[1].strip("\\")
         try:
