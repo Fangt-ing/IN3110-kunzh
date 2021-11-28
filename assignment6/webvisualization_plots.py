@@ -1,7 +1,4 @@
-import sys, os
 import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib.dates as dts
 import altair as alt
 
 
@@ -132,7 +129,7 @@ def main():
     """Function called when run as a script
     Creates a chart and display it or save it to a file
     """
-    chart = plot_reported_cases_per_million(countries=["Norway"], start="2021-05-10")
+    chart = plot_reported_cases_per_million(countries=["Norway", 'Finland'], start="2021-05-10")
     # chart.show requires altair_viewer
     # or you could save to a file instead
     chart.show()
