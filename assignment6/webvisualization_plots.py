@@ -35,44 +35,46 @@ def get_data_from_csv(columns, countries=None, start=None, end=None):
             by_country = pd.concat(
                 [df.groupby("location").get_group(country) for country in countries]
             )
-            if start and end and start > end:
-                print("End must be later than start!")
-                raise ValueError
-
-            if start:
-                start = pd.to_datetime(start, format="%Y-%m-%d")
-            elif not start:
-                start = by_country["date"].iloc[0]
-
-            if end:
-                end = pd.to_datetime(end, format="%Y-%m-%d")
-            elif not end:
-                end = by_country["date"].iloc[-1]
-
-            if (start not in df.date.values) or (end not in df.date.values):
-                print(
-                    f"The date ranges from {df.date.iloc[0]} to {df.date.iloc[-1]},\n\
-                      please choose a date from the date rage."
-                )
-                raise ValueError
-            cases_df = by_country.loc[
-                (by_country.date >= start) & (by_country.date <= end)
-            ]
+            # cases_df = by_country.loc[(by_country.date >= start) & (by_country.date <= end)]
+            
+        
         else:
             # get the latest date and drop any country that don't have record on this day.
-            latest = df.drop_duplicates(subset="location", keep="last").dropna(
-                how="any"
-            )
+            latest = df.drop_duplicates(subset="location", keep="last")
             # sort by new_cases_per_million, and assing the top six countries
-            cases_df = latest.sort_values(by="new_cases_per_million", ascending=False)[
-                :6
-            ]
+            top6 = latest.sort_values(by="new_cases_per_million", ascending=False)[:6]
+            by_country = pd.concat(
+                [df.groupby('location').get_group(country) for country in list(top6.location)]
+            )
+            # cases_df = by_country.loc[(by_country.date >= start) & (by_country.date <= end)]
+        
+        if start and end and start > end:
+                print("End must be later than start!")
+                raise ValueError
+        
+        if start:
+            start = pd.to_datetime(start, format="%Y-%m-%d")
+        elif start is None:
+            start = df.date.min()
 
+        if end:
+            end = pd.to_datetime(end, format="%Y-%m-%d")
+        elif end is None:
+            end = df.date.max()
+
+        if (start not in df.date.values) or (end not in df.date.values):
+            print(
+                f"The date ranges from {df.date.iloc[0]} to {df.date.iloc[-1]},\n\
+                    please choose a date from the date rage."
+            )
+            raise ValueError
+        cases_df = by_country.loc[(by_country.date >= start) & (by_country.date <= end)]
+        
     except FileNotFoundError:
         print(
             "Please visit: https://ourworldindata.org/covid-cases and download the owid-covid-data.csv"
         )
-
+        
     return cases_df
 
 
@@ -92,7 +94,6 @@ def plot_reported_cases_per_million(countries=None, start=None, end=None):
     """
     # choose data column to be extracted
     columns = ["new_cases_per_million"]
-    # create dataframe
     cases_df = get_data_from_csv(
         columns=columns, countries=countries, start=start, end=end
     )
@@ -129,7 +130,7 @@ def main():
     """Function called when run as a script
     Creates a chart and display it or save it to a file
     """
-    chart = plot_reported_cases_per_million(countries=["Norway", 'Finland'], start="2021-05-10")
+    chart = plot_reported_cases_per_million()
     # chart.show requires altair_viewer
     # or you could save to a file instead
     chart.show()
