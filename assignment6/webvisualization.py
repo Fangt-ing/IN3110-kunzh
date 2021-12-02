@@ -30,39 +30,30 @@ app.mount(
     name="static",
 )
 
+def get_country_list():
+    df = pd.read_csv(
+        "owid-covid-data.csv",
+        sep=",",
+        usecols=["location"] + ["date"] + ['new_cases_per_million'],
+        parse_dates=["date"],
+        date_parser=lambda col: pd.to_datetime(col, format="%Y-%m-%d"),
+    )
+    country_list = list(df.location.unique())
+    
+    return country_list
+
 @app.get("/")
-def plot_reported_cases_per_million_html(request: Request, 
-                                         countries: Optional[str] = None, 
-                                         start: Optional[str] = None, 
-                                         end: Optional[str] = None):
+def plot_reported_cases_per_million_html(request: Request):
     """
     Root route for the web application.
     Handle requests that go to the path "/".
     """
-    df = pd.read_csv(
-            "owid-covid-data.csv",
-            sep=",",
-            usecols=["location"] + ["date"] + ['new_cases_per_million'],
-            parse_dates=["date"],
-            date_parser=lambda col: pd.to_datetime(col, format="%Y-%m-%d"),
-        )
-    country_list = list(df.location.unique())
-    
-    if countries:
-        countries = countries.replace(' ', '').split(",")
-    else:
-        countries =[]
-    chart = plot_reported_cases_per_million(countries=countries, 
-                                            start=start,
-                                            end = end)
     return templates.TemplateResponse(
         "plot_reported_cases_per_million.html",
         {
             "request": request,
             # further template inputs here
-            "countries": countries, # from data frame countries
-            "vis": chart.show(),
-            # "id": country_list,
+            "countries": get_country_list(), # from data frame countries
         },
     )
 
@@ -72,21 +63,14 @@ def plot_reported_cases_per_million_json(
     """Return json chart from altair"""
     # YOUR CODE
     if countries:
-        countries = countries.replace(' ', '').split(",")
+        countries = countries.split(",")
     else:
         countries =[]
-    # fig = plt.plot_reported_cases_per_million(countries, start, end)
-    fig = plot_reported_cases_per_million(countries=countries, 
+    chart = plot_reported_cases_per_million(countries=countries, 
                                     start=start,
                                     end = end)
     # fig = plots.plot_daily_cases_altair(countries)
-    return fig.to_dict()
-        
-# @app.post("/")
-# async def create_file(file: bytes = File(...), token: str =  Form(...)):
-#     return {
-#         "token": token,
-#     }
+    return chart.to_dict()
 
 def main():
     """Called when run as a script
@@ -94,12 +78,8 @@ def main():
     Should launch your web app
     """
     # YOUR CODE
-    plot_reported_cases_per_million_html()
-    # plot_reported_cases_per_million_json()
-
+    import uvicorn
+    uvicorn.run(app)
 
 if __name__ == "__main__":
-    # import uvicorn
-    # uvicorn.run(app)
     main()
-    # app.run(host='localhost', port='5000', debug=True)
