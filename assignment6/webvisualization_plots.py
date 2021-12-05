@@ -3,14 +3,16 @@ import altair as alt
 
 
 def get_data_from_csv(columns, countries=None, start=None, end=None):
-    """Creates pandas dataframe from .csv file.
+    """
+    Creates pandas dataframe from .csv file.
     Data will be filtered based on data column name, list of countries to be plotted and
     time frame chosen.
+    
     Args:
-        columns (list(string)): a list of data columns you want to include
+        columns (list(string)): a list of data columns you want to include.
         countries ((list(string), optional): List of countries you want to include.
-        If none is passed, dataframe should be filtered for the 6 countries with the highest
-        number of cases per million at the last current date available in the timeframe chosen.
+            If none is passed, dataframe should be filtered for the 6 countries with the highest
+            number of cases per million at the last current date available in the timeframe chosen.
         start (string, optional): The first date to include in the returned dataframe.
             If specified, records earlier than this will be excluded.
             Default: include earliest date
@@ -36,30 +38,32 @@ def get_data_from_csv(columns, countries=None, start=None, end=None):
                 [df.groupby("location").get_group(country) for country in countries]
             )
             # cases_df = by_country.loc[(by_country.date >= start) & (by_country.date <= end)]
-            
-        
+
         else:
             # get the latest date and drop any country that don't have record on this day.
             latest = df.drop_duplicates(subset="location", keep="last")
             # sort by new_cases_per_million, and assing the top six countries
             top6 = latest.sort_values(by="new_cases_per_million", ascending=False)[:6]
             by_country = pd.concat(
-                [df.groupby('location').get_group(country) for country in list(top6.location)]
+                [
+                    df.groupby("location").get_group(country)
+                    for country in list(top6.location)
+                ]
             )
             # cases_df = by_country.loc[(by_country.date >= start) & (by_country.date <= end)]
-        
+
         if start and end and start > end:
-                print("End must be later than start!")
-                raise ValueError
-        
+            print("End must be later than start!")
+            raise ValueError
+
         if start:
             start = pd.to_datetime(start, format="%Y-%m-%d")
-        elif start is None:
+        else:
             start = df.date.min()
 
         if end:
             end = pd.to_datetime(end, format="%Y-%m-%d")
-        elif end is None:
+        else:
             end = df.date.max()
 
         if (start not in df.date.values) or (end not in df.date.values):
@@ -69,26 +73,28 @@ def get_data_from_csv(columns, countries=None, start=None, end=None):
             )
             raise ValueError
         cases_df = by_country.loc[(by_country.date >= start) & (by_country.date <= end)]
-        
+
     except FileNotFoundError:
         print(
             "Please visit: https://ourworldindata.org/covid-cases and download the owid-covid-data.csv"
         )
-        
+
     return cases_df
 
 
 def plot_reported_cases_per_million(countries=None, start=None, end=None):
-    """Plots data of reported covid-19 cases per million using altair.
+    """
+    Plots data of reported covid-19 cases per million using altair.
     Calls the function get_data_from_csv to receive a dataframe used for plotting.
+    
     Args:
         countries ((list(string), optional): List of countries you want to filter.
-        If none is passed, dataframe will be filtered for the 6 countries with the highest
-        number of cases per million at the last current date available in the timeframe chosen.
+            If none is passed, dataframe will be filtered for the 6 countries with the highest
+            number of cases per million at the last current date available in the timeframe chosen.
         start (string, optional): a string of the start date of the table, none
-        of the dates will be older then this on
+            of the dates will be older then this on
         end (string, optional): a string of the en date of the table, none of
-        the dates will be newer then this one
+            the dates will be newer then this one
     Returns:
         altair Chart of number of reported covid-19 cases over time.
     """
@@ -99,7 +105,7 @@ def plot_reported_cases_per_million(countries=None, start=None, end=None):
     )
 
     # Note: when you want to plot all countries simultaneously while enabling checkboxes, you might need to disable altairs max row limit by commenting in the following line
-    # alt.data_transformers.disable_max_rows()
+    alt.data_transformers.disable_max_rows()
 
     chart = (
         alt.Chart(cases_df, title=f"{columns[0]} of {countries}")
@@ -127,7 +133,8 @@ def plot_reported_cases_per_million(countries=None, start=None, end=None):
 
 
 def main():
-    """Function called when run as a script
+    """
+    Function called when run as a script
     Creates a chart and display it or save it to a file
     """
     chart = plot_reported_cases_per_million()
