@@ -31,6 +31,7 @@ def get_data_from_csv(columns, countries=None, start=None, end=None):
             parse_dates=["date"],
             date_parser=lambda col: pd.to_datetime(col, format="%Y-%m-%d"),
         )
+        by_country_7=pd.DataFrame()
 
         if countries:
             # group the countries when countries are specified
@@ -38,7 +39,11 @@ def get_data_from_csv(columns, countries=None, start=None, end=None):
                 [df.groupby("location").get_group(country) for country in countries]
             )
             # cases_df = by_country.loc[(by_country.date >= start) & (by_country.date <= end)]
-
+            for country in countries:
+                country7 = df.groupby("location").get_group(country)
+                seven = country7.new_cases_per_million.rolling(7).sum()
+                s= pd.Series(seven, name="7-day rolling average")
+                by_country_7 = by_country_7.append(pd.concat([country7, s], axis=1))
         else:
             # get the latest date and drop any country that don't have record on this day.
             latest = df.drop_duplicates(subset="location", keep="last")
@@ -51,7 +56,12 @@ def get_data_from_csv(columns, countries=None, start=None, end=None):
                 ]
             )
             # cases_df = by_country.loc[(by_country.date >= start) & (by_country.date <= end)]
-
+            for country in top6.location:
+                country7 = df.groupby("location").get_group(country)
+                seven = country7.new_cases_per_million.rolling(7).sum()
+                s= pd.Series(seven, name="7-day rolling average")
+                by_country_7 = by_country_7.append(pd.concat([country7, s], axis=1))
+            
         if start and end and start > end:
             print("End must be later than start!")
             raise ValueError
@@ -72,14 +82,14 @@ def get_data_from_csv(columns, countries=None, start=None, end=None):
                     please choose a date from the date rage."
             )
             raise ValueError
-        cases_df = by_country.loc[(by_country.date >= start) & (by_country.date <= end)]
-
+        cases_df = by_country.loc[(by_country.date >= start) & (by_country.date <= end)]        
+        
     except FileNotFoundError:
         print(
             "Please visit: https://ourworldindata.org/covid-cases and download the owid-covid-data.csv"
         )
 
-    return cases_df
+    return [cases_df, by_country_7]
 
 
 def plot_reported_cases_per_million(countries=None, start=None, end=None):
@@ -102,19 +112,75 @@ def plot_reported_cases_per_million(countries=None, start=None, end=None):
     columns = ["new_cases_per_million"]
     cases_df = get_data_from_csv(
         columns=columns, countries=countries, start=start, end=end
-    )
+    )[0]
 
+    if countries:
+        country_name=countries
+    else:
+        country_name="top6 countries"
     # Note: when you want to plot all countries simultaneously while enabling checkboxes, you might need to disable altairs max row limit by commenting in the following line
     alt.data_transformers.disable_max_rows()
 
     chart = (
-        alt.Chart(cases_df, title=f"{columns[0]} of {countries}")
+        alt.Chart(cases_df, title=f"new_cases_per_million of {country_name}")
         .mark_line()
         .encode(
             x=alt.X(
                 "date:T",
                 axis=alt.Axis(
-                    format="%b, %Y", title="Date", titleFontSize=14, tickCount=20
+                    format="%d,%b, %Y", title="Date", titleFontSize=14, tickCount=20
+                ),
+            ),
+            y=alt.Y(
+                "new_cases_per_million",
+                axis=alt.Axis(
+                    title="Number of Reported Cases per Million",
+                    titleFontSize=14,
+                    tickCount=10,
+                ),
+            ),
+            color=alt.Color("location:N", legend=alt.Legend(title="Country")),
+        )
+        .interactive()
+    )
+    return chart
+
+def plot_rolling_average(countries=None, start=None, end=None):
+    """
+    Plots data of reported covid-19 cases per million using altair.
+    Calls the function get_data_from_csv to receive a dataframe used for plotting.
+    
+    Args:
+        countries ((list(string), optional): List of countries you want to filter.
+            If none is passed, dataframe will be filtered for the 6 countries with the highest
+            number of cases per million at the last current date available in the timeframe chosen.
+        start (string, optional): a string of the start date of the table, none
+            of the dates will be older then this on
+        end (string, optional): a string of the en date of the table, none of
+            the dates will be newer then this one
+    Returns:
+        altair Chart of number of reported covid-19 cases over time.
+    """
+    # choose data column to be extracted
+    columns = ["new_cases_per_million"]
+    cases_df = get_data_from_csv(
+        columns=columns, countries=countries, start=start, end=end
+    )[1]
+    if countries:
+        country_name=countries
+    else:
+        country_name="top6 countries"
+    # Note: when you want to plot all countries simultaneously while enabling checkboxes, you might need to disable altairs max row limit by commenting in the following line
+    alt.data_transformers.disable_max_rows()
+
+    chart = (
+        alt.Chart(cases_df, title=f"7-day rolling average of {country_name}")
+        .mark_line()
+        .encode(
+            x=alt.X(
+                "date:T",
+                axis=alt.Axis(
+                    format="%d, %b, %Y", title="Date", titleFontSize=14, tickCount=20
                 ),
             ),
             y=alt.Y(
@@ -137,14 +203,10 @@ def main():
     Function called when run as a script
     Creates a chart and display it or save it to a file
     """
-    chart = plot_reported_cases_per_million()
-    # chart.show requires altair_viewer
-    # or you could save to a file instead
-    chart.show()
+    # plot_reported_cases_per_million().show()
+
+    plot_rolling_average().show()
 
 
 if __name__ == "__main__":
     main()
-
-# if __name__ == '__main__':
-#     print(plot_reported_cases_per_million(['new_cases_per_million'], countries=['Norway'], start = '2020.10.10', end = '2021.10.10'))
