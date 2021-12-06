@@ -42,7 +42,7 @@ def get_country_time():
         date_parser=lambda col: pd.to_datetime(col, format="%Y-%m-%d"),
     )
     country_list = list(df.location.unique())
-    time_list = list(pd.to_datetime(df["date"], format="%Y-%m-%d").dt.date.drop_duplicates())
+    time_list = list(pd.to_datetime(df["date"].sort_values(), format="%Y-%m-%d").dt.date.drop_duplicates())
 
     return [country_list, time_list]
 
@@ -60,6 +60,7 @@ def plot_reported_cases_per_million_html(request: Request):
             "countries": get_country_time()[0], # from data frame countries
             "starts": get_country_time()[1],
             "ends":  get_country_time()[1],
+            # "rolling": "rolling",
         },
     )
 
@@ -92,7 +93,7 @@ def FastAPI_docs(request: Request):
 @app.get("/plot_reported_cases_per_million.json")
 def plot_reported_cases_per_million_json(
     countries: Optional[str] = None, start: Optional[str] = None, end: Optional[str] = None):
-    """Return json chart from altair"""
+    """Return json chart of plot_reported_cases_per_million.json from altair"""
     # YOUR CODE
     if countries:
         countries = countries.split(",")
@@ -107,7 +108,7 @@ def plot_reported_cases_per_million_json(
 @app.get("/plot_rolling_average.json")
 def plot_rolling_average_json(
     countries: Optional[str] = None, start: Optional[str] = None, end: Optional[str] = None):
-    """Return json chart from altair"""
+    """Return json chart of plot_rolling_average from altair"""
     # YOUR CODE
     if countries:
         countries = countries.split(",")
@@ -116,7 +117,6 @@ def plot_rolling_average_json(
     chart = plot_rolling_average(countries=countries, 
                                     start= start,
                                     end = end)
-    # fig = plots.plot_daily_cases_altair(countries)
     return chart.to_dict()
 
 def main():

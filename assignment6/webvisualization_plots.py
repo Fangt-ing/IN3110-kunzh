@@ -43,7 +43,7 @@ def get_data_from_csv(columns, countries=None, start=None, end=None):
                 country7 = df.groupby("location").get_group(country)
                 seven = country7.new_cases_per_million.rolling(7).sum()
                 s= pd.Series(seven, name="7-day rolling average")
-                by_country_7 = by_country_7.append(pd.concat([country7, s], axis=1))
+                by_country_7 = by_country_7.append(pd.concat([country7, s], axis=1)).drop(columns="new_cases_per_million")
         else:
             # get the latest date and drop any country that don't have record on this day.
             latest = df.drop_duplicates(subset="location", keep="last")
@@ -60,7 +60,7 @@ def get_data_from_csv(columns, countries=None, start=None, end=None):
                 country7 = df.groupby("location").get_group(country)
                 seven = country7.new_cases_per_million.rolling(7).sum()
                 s= pd.Series(seven, name="7-day rolling average")
-                by_country_7 = by_country_7.append(pd.concat([country7, s], axis=1))
+                by_country_7 = by_country_7.append(pd.concat([country7, s], axis=1)).drop(columns="new_cases_per_million")
             
         if start and end and start > end:
             print("End must be later than start!")
@@ -184,7 +184,7 @@ def plot_rolling_average(countries=None, start=None, end=None):
                 ),
             ),
             y=alt.Y(
-                "new_cases_per_million",
+                "7-day rolling average",
                 axis=alt.Axis(
                     title="Number of Reported Cases per Million",
                     titleFontSize=14,
