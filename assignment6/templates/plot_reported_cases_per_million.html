@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .error {
+            color: red;
+        }
+
+        #plots {
+            display: flex;
+        }
+    </style>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.8.1"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        .topnav a {
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .topnav a.active {
+            background-color: #04AA6D;
+            color: white;
+        }
+    </style>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            padding: 12px 16px;
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Add Navigation Bar . -->
+    <div class=" topnav ">
+        <a class=" active " href="/">Home</a>
+        <a href="/FastAPI Docs">FastAPI Docs</a>
+        <a href="/help">Help</a>
+    </div>
+
+    <h1>Covid cases by country</h1>
+
+    <form action="javascript:refreshPlot()" id="plot">
+        Plot view format:
+        <select name="country" id="country-select">
+            <option value="per million">Cases per million plot</option>
+            <option value="7-day rolling">7-day rolling average plot</option>
+            <option value="New cases: daily">7-day rolling average plot</option>
+        </select>
+    </form>
+    <br />
+
+    <div id="vis"></div>
+
+    <br /><br />
+    <form action="javascript:refreshPlot()" id="country">
+        Countries:
+        <select multiple name="country" id="country-select">
+            {% for country in countries %}
+            <option value="{{ country }}">{{ country }}</option>
+            {% endfor %}
+        </select>
+    </form>
+    <br />
+
+    <form action="javascript:refreshPlot()" id="start">
+        Start time (YYYY-MM-DD):
+        <select name="start" id="start-select">
+            <option value="">Select a start time</option>
+            {% for start in starts %}
+            <option value="{{ start }}">{{ start }}</option>
+            {% endfor %}
+        </select>
+    </form>
+    <br />
+
+    <form action="javascript:refreshPlot()" id="end">
+        End time (YYYY-MM-DD):
+        <select name="end" id="end-select">
+            <option value="">Select an end time</option>
+            {% for end in ends %}
+            <option value="{{ end }}">{{ end }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <br />
+    <form action="javascript:refreshPlot()" id="country">
+        <button type="submit">Refresh</button>
+    </form>
+
+    <script>
+        async function refreshPlot() {
+            // get selected checkboxes
+            var selected = [];
+            var st = [];
+            var et = [];
+            for (option of document.getElementById("country").querySelectorAll("option")) {
+                if (option.selected) {
+                    selected.push(option.value);
+                }
+            }
+            var countryParam = "?countries=" + encodeURIComponent(selected.join(","));
+
+            for (option of document.getElementById("start").querySelectorAll("option")) {
+                if (option.selected) {
+                    st.push(option.value);
+                }
+            }
+            var starttime = "&start=" + encodeURIComponent(st);
+
+            for (option of document.getElementById("end").querySelectorAll("option")) {
+                if (option.selected) {
+                    et.push(option.value);
+                }
+            }
+            var endtime = "&end=" + encodeURIComponent(et);
+
+            plot = []
+            for (option of document.getElementById("plot").querySelectorAll("option")) {
+                if (option.selected) {
+                    plot.push(option.value);
+                }
+            }
+            // alert(plot)
+            if (plot == "per million") {
+                var response = await fetch("/plot_reported_cases_per_million.json" + countryParam + starttime + endtime);
+            }else if (plot == "7-day rolling"){
+                var response = await fetch("/plot_rolling_average.json" + countryParam + starttime + endtime);
+            }
+            var spec = await response.json();
+
+            var embedOpt = { "mode": "vega-lite" };
+
+            function showError(el, error) {
+                el.innerHTML = ('<div class="error" style="color:red;">'
+                    + '<p>JavaScript Error: ' + error.message + '</p>'
+                    + "<p>This usually means there's a typo in your chart specification. "
+                    + "See the javascript console for the full traceback.</p>"
+                    + '</div>');
+                throw error;
+            }
+            const el = document.getElementById('vis');
+            vegaEmbed("#vis", spec, embedOpt)
+                .catch(error => showError(el, error));
+        }
+        // trigger a first refresh of the plots on page load
+        refreshPlot();
+    </script>
+</body>
+
+</html>

@@ -197,6 +197,57 @@ def plot_rolling_average(countries=None, start=None, end=None):
     )
     return chart
 
+# def new_cases(countries=None, start=None, end=None):
+    """
+    Plots data of reported covid-19 cases per million using altair.
+    Calls the function get_data_from_csv to receive a dataframe used for plotting.
+    
+    Args:
+        countries ((list(string), optional): List of countries you want to filter.
+            If none is passed, dataframe will be filtered for the 6 countries with the highest
+            number of cases per million at the last current date available in the timeframe chosen.
+        start (string, optional): a string of the start date of the table, none
+            of the dates will be older then this on
+        end (string, optional): a string of the en date of the table, none of
+            the dates will be newer then this one
+    Returns:
+        altair Chart of number of reported covid-19 cases over time.
+    """
+    # choose data column to be extracted
+    columns = ["new_cases"]
+    cases_df = get_data_from_csv(
+        columns=columns, countries=countries, start=start, end=end
+    )[0]
+    if countries:
+        country_name=countries
+    else:
+        country_name="top6 countries with per million new cases"
+    # Note: when you want to plot all countries simultaneously while enabling checkboxes, you might need to disable altairs max row limit by commenting in the following line
+    alt.data_transformers.disable_max_rows()
+
+    chart = (
+        alt.Chart(cases_df, title=f"7-day rolling average of {country_name}")
+        .mark_line()
+        .encode(
+            x=alt.X(
+                "date:T",
+                axis=alt.Axis(
+                    format="%d, %b, %Y", title="Date", titleFontSize=14, tickCount=20
+                ),
+            ),
+            y=alt.Y(
+                "7-day rolling average",
+                axis=alt.Axis(
+                    title="Number of Reported Cases per Million",
+                    titleFontSize=14,
+                    tickCount=10,
+                ),
+            ),
+            color=alt.Color("location:N", legend=alt.Legend(title="Country")),
+        )
+        .interactive()
+    )
+    return chart
 
 def main():
     """

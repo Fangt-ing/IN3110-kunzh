@@ -10,7 +10,7 @@
 # ignore test files
 test.py
 *tests*
-*temp*
+*temp.*
 
 # adviced ignore
 *.pyc
